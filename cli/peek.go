@@ -9,22 +9,21 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var defaultLinesToPeek = 10
-
 // Peek - peeks into a file
 func Peek(c *cli.Context) error {
 	filename := c.Args().First()
+	maxLines := c.Int("max")
 
 	if filename == "" {
 		log.Fatal("Please enter a filename")
 	}
 
-	peek(filename)
+	peek(filename, maxLines)
 
 	return nil
 }
 
-func peek(filename string) error {
+func peek(filename string, maxLines int) error {
 	file, err := os.Open(filename)
 
 	if err != nil {
@@ -34,7 +33,7 @@ func peek(filename string) error {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	for i := 0; i < defaultLinesToPeek; i++ {
+	for i := 0; i < maxLines; i++ {
 		if scanner.Scan() {
 			fmt.Println(scanner.Text())
 		}

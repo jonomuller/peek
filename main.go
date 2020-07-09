@@ -13,6 +13,14 @@ func main() {
 		Name:   "peek",
 		Usage:  "peek <filename>",
 		Action: peekcli.Peek,
+		Flags: []cli.Flag{
+			&cli.IntFlag{
+				Name:    "max",
+				Usage:   "max number of lines to peek",
+				Aliases: []string{"n"},
+				Value:   10,
+			},
+		},
 	}
 
 	err := app.Run(os.Args)
