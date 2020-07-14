@@ -33,15 +33,26 @@ func peek(filename string, maxLines int) error {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	for i := 0; i < maxLines; i++ {
-		if scanner.Scan() {
-			fmt.Println(scanner.Text())
-		}
-	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
 
-	return nil
+	reader := bufio.NewReader(os.Stdin)
+
+	for i := 0; i < maxLines; i++ {
+		if scanner.Scan() {
+			fmt.Print(scanner.Text())
+			if i < maxLines-1 {
+				fmt.Print("\n")
+			}
+		}
+	}
+
+	for {
+		reader.ReadString('\n')
+		if scanner.Scan() {
+			fmt.Print(scanner.Text())
+		}
+	}
 }
