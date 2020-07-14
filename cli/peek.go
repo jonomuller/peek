@@ -46,6 +46,8 @@ func peek(filename string, maxLines int) error {
 			if i < maxLines-1 {
 				fmt.Print("\n")
 			}
+		} else {
+			return nil
 		}
 	}
 
@@ -53,6 +55,8 @@ func peek(filename string, maxLines int) error {
 		reader.ReadString('\n')
 		if scanner.Scan() {
 			fmt.Print(scanner.Text())
+		} else {
+			return nil
 		}
 	}
 }
